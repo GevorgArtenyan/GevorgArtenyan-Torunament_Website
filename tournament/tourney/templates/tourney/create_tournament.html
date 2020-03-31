@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'tourney/base.html' %}
+{% block content %}
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button id="add_player">Add a Player</button>
+    <input type="submit" value="Save">
+</form>
+{% endblock %}
