@@ -1,8 +1,12 @@
 {% extends 'tourney/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
+<div class="container"  >
+    <form id='player_form' method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Save">
+    </form>
     <button id="add_player">Add a Player</button>
-    <input type="submit" value="Save">
-</form>
+    <button id="remove_player">Remove a Player</button>
+</div>
 {% endblock %}

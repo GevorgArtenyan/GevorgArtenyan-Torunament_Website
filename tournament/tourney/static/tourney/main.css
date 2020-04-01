@@ -1,0 +1,10 @@
+.form-group {
+  display: none;
+}
+
+#div_id_name, #div_id_players,
+#div_id_player1, #div_id_player2,
+#div_id_player3, #div_id_player4
+{
+  display: block;
+}
