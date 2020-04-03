@@ -13,7 +13,7 @@ class TournamentCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.host = self.request.user
-        return super().form_valid(form)
+        return super(TournamentCreateView, self).form_valid(form)
 
 class TournamentDetailView(DetailView):
     model = TournamentModel
