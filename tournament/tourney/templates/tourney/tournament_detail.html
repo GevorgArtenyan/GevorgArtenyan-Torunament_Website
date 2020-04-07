@@ -1,4 +1,13 @@
 {% extends 'tourney/base.html' %}
 {% block content %}
-{{ object.players }}
+    <ul>
+    {% for v in players_list %}
+        <li>{{ v.player_name }} {{ v.points }}</li>
+    {% endfor %}
+    </ul>
+
+{% for p in points %}
+    {{ p }}
+{% endfor %}
+
 {% endblock %}

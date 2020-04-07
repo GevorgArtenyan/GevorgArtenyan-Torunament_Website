@@ -1,7 +1,6 @@
 {% extends 'tourney/base.html' %}
 {% block content %}
 {% for tournament in object_list %}
-    <h1>{{ tournament.name }}</h1>
-    <h4>{{ tournament.players }}</h4>
+    <h1><a href="{% url 'index' tournament.id %}">{{ tournament.name }}</a></h1>
 {% endfor %}
 {% endblock %}

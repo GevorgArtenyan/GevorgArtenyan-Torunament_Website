@@ -1,0 +1,60 @@
+{% extends 'tourney/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div>
+    <form method="POST">
+        {% csrf_token %}
+        {{ formset }}
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+<div class="container">
+    <div class="main1">
+        <div class="main2 table-responsive">
+            <center>
+                <h2> PREMIER LEAGUE </h2>
+                <p class="pt">POINTS TABLE 2019</p>
+                <table class="table">
+                    <thead>
+                        <td>Pos.</td>
+                        <td class="name">CLUBS</td>
+                        <td>P</td>
+                        <td>W</td>
+                        <td>D</td>
+                        <td>L</td>
+                        <td>GS</td>
+                        <td>GC</td>
+                        <td>GD</td>
+                        <td>POINTS</td>
+                    </thead>
+{% for p in related_players %}
+                    <tbody>
+                        <tr class="top">
+                            <td class="pos">0</td>
+                            <td class="name">&nbsp;&nbsp; {{ p.name }}</td>
+                            <td>{{ p.games_played }}</td>
+                            <td>{{ p.wins }}</td>
+                            <td>{{ p.draws }}</td>
+                            <td>{{ p.defeats }}</td>
+                            <td>{{ p.goals_scored }}</td>
+                            <td>{{ p.goals_conceded }}</td>
+                            <td>0</td>
+                            <td> {{ p.points }}</td>
+                        </tr>
+                    </tbody>
+{% endfor %}
+                </table>
+            </center>
+        </div>
+    </div>
+</div>
+<ul>
+<br>
+<br>
+{% for match in matches %}
+    <li>{{ match }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

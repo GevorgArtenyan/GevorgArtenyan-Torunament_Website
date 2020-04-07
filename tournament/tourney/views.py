@@ -1,20 +1,28 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
-from .models import TournamentModel
-from .forms import TorunamentForm
+from tourney.forms import TorunamentForm, PlayerForm, TournamentPlayerFormSet
+from tourney.models import TournamentModel, PlayerModel, MatchModel
+from django.forms import modelformset_factory, inlineformset_factory
+
 
 class TournamentListView(ListView):
     model = TournamentModel
     template_name = 'tourney/home.html'
 
-class TournamentCreateView(CreateView):
-    form_class = TorunamentForm
-    template_name = 'tourney/create_tournament.html'
 
-    def form_valid(self, form):
-        form.instance.host = self.request.user
-        return super(TournamentCreateView, self).form_valid(form)
+def index(request, pk):
+    tournament = TournamentModel.objects.get(pk=pk)
+    PlayerFormset = inlineformset_factory(TournamentModel, PlayerModel, fields=('name', ))
 
-class TournamentDetailView(DetailView):
-    model = TournamentModel
-    template_name = 'tourney/tournament_detail.html'
+    if request.method == 'POST':
+        formset = PlayerFormset(request.POST, instance=tournament)
+        if formset.is_valid():
+            formset.save()
+
+            return redirect('index', pk=pk)
+    formset = PlayerFormset(instance=tournament)
+    related_players = PlayerModel.objects.filter(tournament=tournament)
+
+    return render(request, 'tourney/index.html', {'formset':formset, 'related_players':related_players,
+                })
+
