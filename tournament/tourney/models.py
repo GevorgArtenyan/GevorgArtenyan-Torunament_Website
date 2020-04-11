@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models.signals import post_save, pre_save
-
+from django.urls import reverse
 
 
 class TournamentModel(models.Model):
@@ -26,7 +26,7 @@ class PlayerModel(models.Model):
     defeats = models.PositiveIntegerField(default=0)
     goals_scored = models.PositiveIntegerField(default=0)
     goals_conceded = models.PositiveIntegerField(default=0)
-
+    goal_difference = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -35,11 +35,15 @@ class PlayerModel(models.Model):
 class MatchModel(models.Model):
     player1 = models.ForeignKey(PlayerModel, on_delete=models.CASCADE, related_name='home_player')
     player2 = models.ForeignKey(PlayerModel, on_delete=models.CASCADE, related_name='away_player')
-    score1 = models.PositiveIntegerField(default=0)
-    score2 = models.PositiveIntegerField(default=0)
+    score1 = models.PositiveIntegerField(null=True, blank=True)
+    score2 = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.player1} {self.score1}:{self.score2} {self.player2}"
+
+    def get_absolute_url(self):
+        return reverse('match-update', kwargs={'pk': self.pk})
+
 
 def save_player(sender, instance, **kwargs):
     for i in PlayerModel.objects.all():
@@ -50,3 +54,4 @@ def save_player(sender, instance, **kwargs):
             a.save()
 
 post_save.connect(save_player, sender=PlayerModel)
+

@@ -37,10 +37,10 @@
                             <td>{{ p.wins }}</td>
                             <td>{{ p.draws }}</td>
                             <td>{{ p.defeats }}</td>
-                            <td>{{ p.goals_scored }}</td>
-                            <td>{{ p.goals_conceded }}</td>
-                            <td>0</td>
-                            <td> {{ p.points }}</td>
+                            <td class="goals_scored" id="gs-{{ p.pk }}">{{ p.goals_scored }}</td>
+                            <td class="goals_conceded" id="gc-{{ p.pk }}">{{ p.goals_conceded }}</td>
+                            <td class="goal_difference" id="gd-{{ p.pk }}">{{ p.goal_difference }}</td>
+                            <td class="points" id="points-{{ p.pk }}"> {{ p.points }}</td>
                         </tr>
                     </tbody>
 {% endfor %}
@@ -53,8 +53,10 @@
 <br>
 <br>
 {% for match in matches %}
-    <li>{{ match }}</li>
+    <li class="matches" id="match{{ match.pk }}"><a href="#">{{ match }}</a></li>
 {% endfor %}
 </ul>
+
+
 
 {% endblock %}
