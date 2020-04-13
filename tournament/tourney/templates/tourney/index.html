@@ -1,61 +1,84 @@
 {% extends 'tourney/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div>
-    <form method="POST">
-        {% csrf_token %}
-        {{ formset }}
-        <button type="submit">Save</button>
-    </form>
-</div>
 
-<div class="container">
-    <div class="main1">
-        <div class="main2 table-responsive">
-            <center>
-                <h2> PREMIER LEAGUE </h2>
-                <p class="pt">POINTS TABLE 2019</p>
-                <table class="table">
-                    <thead>
-                        <td>Pos.</td>
-                        <td class="name">CLUBS</td>
-                        <td>P</td>
-                        <td>W</td>
-                        <td>D</td>
-                        <td>L</td>
-                        <td>GS</td>
-                        <td>GC</td>
-                        <td>GD</td>
-                        <td>POINTS</td>
-                    </thead>
-{% for p in related_players %}
-                    <tbody>
-                        <tr class="top">
-                            <td class="pos">0</td>
-                            <td class="name">&nbsp;&nbsp; {{ p.name }}</td>
-                            <td>{{ p.games_played }}</td>
-                            <td>{{ p.wins }}</td>
-                            <td>{{ p.draws }}</td>
-                            <td>{{ p.defeats }}</td>
-                            <td class="goals_scored" id="gs-{{ p.pk }}">{{ p.goals_scored }}</td>
-                            <td class="goals_conceded" id="gc-{{ p.pk }}">{{ p.goals_conceded }}</td>
-                            <td class="goal_difference" id="gd-{{ p.pk }}">{{ p.goal_difference }}</td>
-                            <td class="points" id="points-{{ p.pk }}"> {{ p.points }}</td>
-                        </tr>
-                    </tbody>
-{% endfor %}
-                </table>
-            </center>
+<ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#home-md" role="tab" aria-controls="home-md"
+      aria-selected="true">Table</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md" role="tab" aria-controls="profile-md"
+      aria-selected="false">Games</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md"
+      aria-selected="false">Players</a>
+  </li>
+</ul>
+<div class="tab-content card pt-5" id="myTabContentMD">
+  <div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">
+    <div class="container">
+        <div class="main1">
+            <div class="main2 table-responsive">
+                <center>
+                    <h2> {{ related_players.0.tournament }} </h2>
+                    <p class="pt">Table</p>
+                    <table class="table">
+                        <thead>
+                            <td>Pos.</td>
+                            <td class="name">CLUBS</td>
+                            <td>P</td>
+                            <td>W</td>
+                            <td>D</td>
+                            <td>L</td>
+                            <td>GS</td>
+                            <td>GC</td>
+                            <td>GD</td>
+                            <td>POINTS</td>
+                        </thead>
+    {% for p in related_players %}
+                        <tbody>
+                            <tr class="top">
+                                <td class="pos">0</td>
+                                <td class="name">&nbsp;&nbsp; {{ p.name }}</td>
+                                <td>{{ p.games_played }}</td>
+                                <td>{{ p.wins }}</td>
+                                <td>{{ p.draws }}</td>
+                                <td>{{ p.defeats }}</td>
+                                <td class="goals_scored" id="gs-{{ p.pk }}">{{ p.goals_scored }}</td>
+                                <td class="goals_conceded" id="gc-{{ p.pk }}">{{ p.goals_conceded }}</td>
+                                <td class="goal_difference" id="gd-{{ p.pk }}">{{ p.goal_difference }}</td>
+                                <td class="points" id="points-{{ p.pk }}"> {{ p.points }}</td>
+                            </tr>
+                        </tbody>
+    {% endfor %}
+                    </table>
+                </center>
+            </div>
         </div>
     </div>
-</div>
-<ul>
-<br>
-<br>
-{% for match in matches %}
-    <li class="matches" id="match{{ match.pk }}"><a href="#">{{ match }}</a></li>
-{% endfor %}
+  </div>
+  <div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
+    <ul>
+    {% for match in matches %}
+        <li class="matches" id="match{{ match.pk }}"><a href="#">{{ match }}</a></li>
+    {% endfor %}
 </ul>
+  </div>
+  <div class="tab-pane fade" id="contact-md" role="tabpanel" aria-labelledby="contact-tab-md">
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            {{ formset.as_p }}
+            <button type="submit">Save</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+
 
 
 

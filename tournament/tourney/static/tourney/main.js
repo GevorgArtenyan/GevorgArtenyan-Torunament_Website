@@ -19,6 +19,5 @@ $(function(){
 
 $('.save').click(function(){
     window.close();
+    window.opener.location.reload(true);
 })
-
-
