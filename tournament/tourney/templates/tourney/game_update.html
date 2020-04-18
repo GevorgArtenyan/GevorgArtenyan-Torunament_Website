@@ -1,0 +1,10 @@
+{% extends 'tourney/base.html' %}
+{% block content %}
+{{ object.home_player }}
+<form method="POST">
+{% csrf_token %}
+{{ form }}
+<button type="submit" class="save">Save</button>
+</form>
+{{ object.away_player }}
+{% endblock %}

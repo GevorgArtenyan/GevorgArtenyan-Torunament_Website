@@ -10,21 +10,26 @@
 }
 
 .main1 {
-    width: 80vw;
-    height: 90vh;
+    width: auto;
+    height: auto;
     margin: auto;
     position: relative;
-    top: 4vh;
-    font-family: 'Oswald', sans-serif
+    top: -10vh;
+    font-family: Helvetica, , sans-serif;
+    font-weight: 700;
+}
+
+.main1 h2 {
+  color: black
 }
 
 .main2 {
-    width: 80vw;
-    height: 90vh;
+    width: auto;
+    height: auto;
     margin: auto;
-    background-color: #9e9e9e;
+    background-color: #9e9e9e00;
     color: white;
-    padding: 0.5vw
+    padding: 0vw
 }
 
 .flag {
@@ -56,12 +61,16 @@ td {
 }
 
 thead {
-    background-color: red;
-    border-bottom: 2px solid red
+    background-color: #23366d;
+    border-bottom: 2px solid #343a40
+}
+
+thead {
+    color: white
 }
 
 .top {
-    background-color: rgb(0, 255, 0, 0.5)
+    background-color: #e9ecef
 }
 
 .top .logo {
@@ -119,4 +128,69 @@ thead {
     .pt {
         font-size: 5vw
     }
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Helvetica, , sans-serif;
+  font-weight: 800;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+  top: 5vw
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 144px 0px;
+  height: auto;
+}
+
+#Home {background-color: #d2d2d2;}
+#News {background-color: #d2d2d2;}
+#Contact {background-color: #d2d2d2;}
+#About {background-color: #d2d2d2;}
+
+
+.tab {
+    width: 670px;
+    margin-top: 3em;
+    margin-bottom: -0.75em;
+    margin-left:auto;
+    margin-right:auto;
+    line-height: 1.2em;
+}
+
+.game-link {
+   text-decoration: none;
+   color: black
+}
+
+.game-link:hover{
+   text-decoration: none;
+}
+
+.played {
+  color: green;
+}
+
+.game-section{
+  top: 5vh;
 }
