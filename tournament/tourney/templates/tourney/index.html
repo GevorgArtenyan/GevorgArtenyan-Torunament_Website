@@ -1,11 +1,15 @@
 {% extends 'tourney/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<form method="POST">
-{% csrf_token %}
-{{ form }}
-<button type="submit" class="save">Save</button>
-</form>
+
+  <div class="modal fade" id="modal-game">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
+
 
 <div class="tab">
 <button class="tablink" onclick="openPage('Home', this, '#23366d')">Table</button>
@@ -18,6 +22,7 @@
                 <div class="main2 table-responsive">
                     <center>
                         <h2> {{ related_players.0.tournament }} </h2>
+                        <div id="tourney_id"> {{ related_players.0.tournament.pk }} </div>
                         <table class="table">
                             <thead>
                                 <td>Pos.</td>
@@ -57,6 +62,11 @@
 <div id="News" class="tabcontent">
     <div class="game-section">
       <ul>
+        <table class="table" id="game-table">
+            <tbody>
+              {% include 'tourney/partials/partial_game_list.html' %}
+            </tbody>
+          </table>
     {% for game in games %}
         <li class="games" id="game{{ game.pk }}"><a class="game-link" href="#">
             {% if game.h_score is null or  game.a_score is null%}

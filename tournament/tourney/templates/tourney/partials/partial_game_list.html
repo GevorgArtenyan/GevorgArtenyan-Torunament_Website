@@ -1,0 +1,26 @@
+{% for game in games %}
+  <tr class="from_tourney{{ game.tournament.id }}">
+    <td>{{ game.home_player }}</td>
+    {% if game.h_score is null or  game.a_score is null%}
+      <td></td>
+      <td>-</td>
+      <td></td>
+    {% else %}
+      <td>{{ game.h_score }}</td>
+      <td>:</td>
+      <td>{{ game.a_score }}</td>
+    {% endif %}
+    <td>{{ game.away_player }}</td>
+    <td style="width: 150px">
+      <button type="button"
+              class="btn btn-warning btn-sm js-update-game"
+              data-url="{% url 'game_update' game.id %}">
+        <span class="glyphicon glyphicon-pencil"></span> Edit Score
+      </button>
+    </td>
+  </tr>
+{% empty %}
+  <tr>
+    <td colspan="8" class="text-center bg-warning">No game</td>
+  </tr>
+{% endfor %}

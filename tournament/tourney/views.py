@@ -1,11 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from .models import TournamentModel, PlayerLeagueModel, MatchModel, GameModel
 from django.forms import inlineformset_factory
 from .serializers import PlayerSerializer
 from rest_framework import generics
 from .table import table, match_calc, sort_table
+from .forms import GameForm
+from .forms import TournamentForm
+from django.http import HttpResponse, HttpResponseRedirect
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 class PlayerAPIListView(generics.UpdateAPIView):
     lookup_field = 'pk'
@@ -16,12 +22,6 @@ class PlayerAPIListView(generics.UpdateAPIView):
 class TournamentListView(ListView):
     model = TournamentModel
     template_name = 'tourney/home.html'
-
-
-class TournamentUpdateView(UpdateView):
-    model = TournamentModel
-    fields = ['position_priorities']
-    template_name = 'tourney/index.html'
 
 
 def index(request, pk):
@@ -46,9 +46,28 @@ def index(request, pk):
                 'matches':matches, 'games':games})
 
 
-class GameUpdateView(UpdateView):
-    model = GameModel
-    fields = ['h_score', 'a_score']
-    template_name = 'tourney/game_update.html'
+def save_game_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            games = GameModel.objects.all()
+            data['html_game_list'] = render_to_string('tourney/partials/partial_game_list.html', {
+                'games':games
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form':form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
 
+
+def game_update(request, pk):
+    game = get_object_or_404(GameModel, pk=pk)
+    if request.method == 'POST':
+        form = GameForm(request.POST, instance=game)
+    else:
+        form = GameForm(instance=game)
+    return save_game_form(request, form, 'tourney/partials/partial_game_update.html')
 

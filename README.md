@@ -1,1 +1,1 @@
-# GevorgArtenyan-Torunament_Website
+pip install django-widget-tweaks
