@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from .models import TournamentModel, PlayerLeagueModel, MatchModel, GameModel
 from django.forms import inlineformset_factory
-from .serializers import PlayerSerializer
+from .serializers import PlayerSerializer, MatchSerializer
 from rest_framework import generics
 from .table import table, match_calc, sort_table
 from .forms import GameForm
@@ -13,11 +13,15 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
-class PlayerAPIListView(generics.UpdateAPIView):
+class PlayerAPIListView(generics.ListAPIView):
     lookup_field = 'pk'
     queryset = PlayerLeagueModel.objects.all()
     serializer_class = PlayerSerializer
 
+class MatchAPIListView(generics.ListAPIView):
+    lookup_field = 'pk'
+    queryset = MatchModel.objects.all()
+    serializer_class = MatchSerializer
 
 class TournamentListView(ListView):
     model = TournamentModel
@@ -37,7 +41,7 @@ def index(request, pk):
     formset = PlayerFormset(instance=tournament)
     related_players = sort_table(PlayerLeagueModel.objects.filter(tournament=tournament))
     matches = MatchModel.objects.filter(player1__in=related_players)
-    games = GameModel.objects.filter(home_player__in=related_players)
+    games = GameModel.objects.filter(home_player__in=related_players).order_by('pk')
 
     table(related_players, games)
     match_calc(games)

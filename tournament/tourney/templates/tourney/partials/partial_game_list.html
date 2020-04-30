@@ -1,16 +1,18 @@
 {% for game in games %}
   <tr class="from_tourney{{ game.tournament.id }}">
-    <td>{{ game.home_player }}</td>
+    <td class="game_match">{{ game.match.id }}</td>
+    <td class="game_id">{{ game.id }}</td>
+    <td class="home_player">{{ game.home_player }}</td>
     {% if game.h_score is null or  game.a_score is null%}
       <td></td>
       <td>-</td>
       <td></td>
     {% else %}
-      <td>{{ game.h_score }}</td>
+      <td class="h_score">{{ game.h_score }}</td>
       <td>:</td>
-      <td>{{ game.a_score }}</td>
+      <td class="a_score">{{ game.a_score }}</td>
     {% endif %}
-    <td>{{ game.away_player }}</td>
+    <td class="away_player">{{ game.away_player }}</td>
     <td style="width: 150px">
       <button type="button"
               class="btn btn-warning btn-sm js-update-game"

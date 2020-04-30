@@ -104,11 +104,15 @@ def match_calc(game):
 
 
 def head_to_head_winner(player1, player2):
-    match = MatchModel.objects.get(
-        Q(player1=player1, player2=player2) |
-        Q(player1=player2, player2=player1)
-    )
-    return match.winner
+    try:
+        match = MatchModel.objects.get(
+            Q(player1=player1, player2=player2) |
+            Q(player1=player2, player2=player1)
+        )
+        return match.winner
+    except:
+        match = None
+
 
 def head_to_head_loser(player1, player2):
     match = MatchModel.objects.get(

@@ -194,3 +194,13 @@ body, html {
 .game-section{
   top: 5vh;
 }
+
+.tournament_id {
+    display: none;
+}
+
+.matches div {
+  display: inline-block;
+  margin: 5px
+
+}

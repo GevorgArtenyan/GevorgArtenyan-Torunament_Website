@@ -12,18 +12,18 @@
 
 
 <div class="tab">
-<button class="tablink" onclick="openPage('Home', this, '#23366d')">Table</button>
-<button class="tablink" onclick="openPage('News', this, '#23366d')" id="defaultOpen">Games</button>
-<button class="tablink" onclick="openPage('Contact', this, '#23366d')">Players</button>
-<button class="tablink" onclick="openPage('About', this, '#23366d')">Settings</button>
-<div id="Home" class="tabcontent">
+<button class="tablink" onclick="openPage('table', this, '#23366d')" id="defaultOpen">Table</button>
+<button class="tablink" onclick="openPage('games', this, '#23366d')">Games</button>
+<button class="tablink" onclick="openPage('players', this, '#23366d')">Players</button>
+<button class="tablink" onclick="openPage('settings', this, '#23366d')">Settings</button>
+<div id="table" class="tabcontent">
         <div class="container">
             <div class="main1">
                 <div class="main2 table-responsive">
                     <center>
                         <h2> {{ related_players.0.tournament }} </h2>
-                        <div id="tourney_id"> {{ related_players.0.tournament.pk }} </div>
-                        <table class="table">
+                        <div id="tourney_id" class="tournament_id"> {{ related_players.0.tournament.pk }} </div>
+                        <table class="table" id="player_list">
                             <thead>
                                 <td>Pos.</td>
                                 <td class="name">CLUBS</td>
@@ -37,7 +37,7 @@
                                 <td>POINTS</td>
                             </thead>
         {% for p in related_players %}
-                            <tbody>
+                            <tbody class="django_player_list">
                                 <tr class="top">
                                     <td class="pos">0</td>
                                     <td class="name">&nbsp;&nbsp; {{ p.name }}</td>
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-<div id="News" class="tabcontent">
+<div id="games" class="tabcontent">
     <div class="game-section">
       <ul>
         <table class="table" id="game-table">
@@ -67,21 +67,11 @@
               {% include 'tourney/partials/partial_game_list.html' %}
             </tbody>
           </table>
-    {% for game in games %}
-        <li class="games" id="game{{ game.pk }}"><a class="game-link" href="#">
-            {% if game.h_score is null or  game.a_score is null%}
-                <div class="not_played">{{ game.home_player }} - {{ game.away_player }}</div>
-            {% else %}
-                <div class="played">{{ game.home_player }} {{ game.h_score }}:{{ game.a_score }} {{ game.away_player }}</div>
-            {% endif %}
-        </a>
-        </li>
-    {% endfor %}
     </ul>
     </div>
 </div>
 
-<div id="Contact" class="tabcontent">
+<div id="players" class="tabcontent">
       <div>
         <form method="POST">
             {% csrf_token %}
@@ -91,9 +81,9 @@
     </div>
 </div>
 
-<div id="About" class="tabcontent">
+<div id="settings" class="tabcontent">
   <h3>Settings</h3>
-
+    <div id="poistion_priority">{{ related_players.0.tournament.position_priority }}</div>
 </div>
 <div>
 </div>
