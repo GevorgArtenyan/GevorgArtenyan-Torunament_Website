@@ -24,7 +24,7 @@ class TournamentModel(models.Model):
         return self.name
 
 class PlayerModel(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=130)
     tournament = models.ForeignKey(TournamentModel, models.CASCADE)
 
 

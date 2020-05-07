@@ -172,4 +172,3 @@ def sort_table(player_list):
     return points_list
 
 
-sort_table(PlayerLeagueModel.objects.all())

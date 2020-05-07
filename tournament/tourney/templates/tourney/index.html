@@ -13,14 +13,20 @@
 
 <div class="tab">
 <button class="tablink" onclick="openPage('table', this, '#23366d')" id="defaultOpen">Table</button>
+<button class="tablink" onclick="openPage('results', this, '#23366d')">Results</button>
+{% if request.user.is_superuser %}
 <button class="tablink" onclick="openPage('games', this, '#23366d')">Games</button>
 <button class="tablink" onclick="openPage('players', this, '#23366d')">Players</button>
 <button class="tablink" onclick="openPage('settings', this, '#23366d')">Settings</button>
+{% else %}
+{% endif %}
 <div id="table" class="tabcontent">
         <div class="container">
             <div class="main1">
                 <div class="main2 table-responsive">
                     <center>
+                        <br>
+                        <br>
                         <h2> {{ related_players.0.tournament }} </h2>
                         <div id="tourney_id" class="tournament_id"> {{ related_players.0.tournament.pk }} </div>
                         <table class="table" id="player_list">
@@ -37,7 +43,7 @@
                                 <td>POINTS</td>
                             </thead>
         {% for p in related_players %}
-                            <tbody class="django_player_list">
+                            <tbody class="player_stats">
                                 <tr class="top">
                                     <td class="pos">0</td>
                                     <td class="name">&nbsp;&nbsp; {{ p.name }}</td>
@@ -58,7 +64,10 @@
             </div>
         </div>
     </div>
+    <div id="results" class="tabcontent">
 
+    </div>
+{% if request.user.is_superuser %}
 <div id="games" class="tabcontent">
     <div class="game-section">
       <ul>
@@ -70,7 +79,6 @@
     </ul>
     </div>
 </div>
-
 <div id="players" class="tabcontent">
       <div>
         <form method="POST">
@@ -80,7 +88,8 @@
         </form>
     </div>
 </div>
-
+{% else %}
+{% endif %}
 <div id="settings" class="tabcontent">
   <h3>Settings</h3>
     <div id="poistion_priority">{{ related_players.0.tournament.position_priority }}</div>
@@ -88,6 +97,5 @@
 <div>
 </div>
 </div>
-
 
 {% endblock %}

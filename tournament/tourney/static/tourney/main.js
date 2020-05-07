@@ -1,6 +1,7 @@
 var matchList = []
 var gameList = []
 var playerList = []
+var playerResultList = []
 var tournament_id = $('#tourney_id').text()
 var thisTournamentGamesClass = '.from_tourney'+tournament_id.trim()
 var playersWithEqualPoints = []
@@ -168,6 +169,11 @@ request_(playerUrl, renderHTML);
 
 
 $('body').on('DOMSubtreeModified', '#games', function(){
+    countingStats()
+});
+
+
+function countingStats(){
   for (var i = 0; i < playerList.length; i++) {
     playerList[i].games_played = 0
     playerList[i].wins = 0
@@ -283,7 +289,6 @@ $('body').on('DOMSubtreeModified', '#games', function(){
     for (var n = 0; n < matchList.length; n++) {
          if (playersWithEqualPoints.includes(matchList[n].player1) == true &&
          playersWithEqualPoints.includes(matchList[n].player2) == true) {
-            console.log(matchList[n])
             if (nameAndPoints[matchList[n].player1] == nameAndPoints[matchList[n].player2]) {
             if (matchList[n].score1 > matchList[n].score2) {
                 headToHeadWins.push(matchList[n].player1)
@@ -294,7 +299,7 @@ $('body').on('DOMSubtreeModified', '#games', function(){
      }
   }
 
-  console.log(headToHeadWins)
+
   playerList.sort(function(first, second) {
         if ($('#poistion_priority').text() == 'Head to Head Matches') {
         return second.points - first.points || countInArray(headToHeadWins, second.name) - countInArray(headToHeadWins, first.name) || second.goal_difference - first.goal_difference || second.goals_scored - first.goals_scored  ||  second.wins - first.wins;
@@ -305,7 +310,6 @@ $('body').on('DOMSubtreeModified', '#games', function(){
 
 
   $('.player_stats').remove()
-  $('.django_player_list').remove()
   for (var x = 0; x < playerList.length; x++) {
     $('#player_list').append(
     '<tbody class="player_stats">' +
@@ -324,8 +328,16 @@ $('body').on('DOMSubtreeModified', '#games', function(){
     '</tbody>'
     )
   }
+  playerResultList.length = 0
+  console.log(playerResultList)
+  $('.name').each(function(){
+    var playerName = $(this).text()
+    playerResultList.push(playerName.trim())
 });
-
+  console.log(playerResultList)
+  $('#results').empty()
+  createTables(playerResultList.length-1,playerResultList.length-1);
+}
 
 
 function countInArray(array, what) {
@@ -336,4 +348,74 @@ function countInArray(array, what) {
         }
     }
     return count;
+}
+
+console.log(playerResultList)
+
+$('.name').each(function(){
+    var playerName = $(this).text()
+    playerResultList.push(playerName.trim())
+});
+
+console.log(playerResultList)
+
+function createTables(maxNum,limit){
+	const table = document.createElement('table');
+	table.setAttribute('class', 'result_table');
+	for(let i = 0;i<maxNum + 1;i++){
+		const row = document.createElement('tr');
+		row.setAttribute('class', 'result_tr');
+		for(let j = 0;j<limit + 1;j++){
+			const td = document.createElement('td');
+			td.setAttribute('class', 'result_td');
+			//Below four lines are new
+			if(i === 0 && j === 0) {td.innerHTML = '';
+            td.setAttribute('class', 'left_name');
+			}
+			else if (i === j) {
+			    $(td).css("background-color", "black")
+			}
+			else if(i === 0){ td.innerHTML = j;
+			td.setAttribute('class', 'top_name');
+			}
+			else if(j === 0) {td.innerHTML = i + '. ' + playerResultList[i]
+            td.setAttribute('class', 'left_name');
+			}
+			else td.innerHTML = calculationResults(playerResultList[i], playerResultList[j])
+			row.appendChild(td);
+		}
+		table.appendChild(row)
+	}
+	$('#results').append(table)
+}
+createTables(playerResultList.length-1,playerResultList.length-1);
+
+
+function calculationResults(team1, team2){
+    var game1 = '<div class="not_played">0:0</div>'
+    var game2 = '<div class="not_played">0:0</div>'
+    $('.from_tourney2').each(function(){
+        if ( team1 == $(this).find('.home_player').text() && team2 == $(this).find('.away_player').text()){
+            if (parseInt($(this).find('.h_score').text()) > parseInt($(this).find('.a_score').text())) {
+                game1 = '<div class="table_score" style="color:green;">' + $(this).find('.h_score').text() + ':' + $(this).find('.a_score').text() + '</div>'
+            } else if (parseInt($(this).find('.h_score').text()) == parseInt($(this).find('.a_score').text())) {
+                game1 = '<div class="table_score" style="color:black;">' + $(this).find('.h_score').text() + ':' + $(this).find('.a_score').text() + '</div>'
+            } else if (parseInt($(this).find('.h_score').text()) < parseInt($(this).find('.a_score').text())) {
+                game1 = '<div class="table_score" style="color:red;">' + $(this).find('.h_score').text() + ':' + $(this).find('.a_score').text() + '</div>'
+            }
+
+        } if ( team2 == $(this).find('.home_player').text() && team1 == $(this).find('.away_player').text()){
+            if (parseInt($(this).find('.h_score').text()) < parseInt($(this).find('.a_score').text())) {
+                game2 = '<div class="table_score" style="color:green;">' + $(this).find('.a_score').text() + ':' + $(this).find('.h_score').text() + '</div>'
+            } else if (parseInt($(this).find('.h_score').text()) == parseInt($(this).find('.a_score').text())) {
+                game2 = '<div class="table_score" style="color:black;">' + $(this).find('.a_score').text() + ':' + $(this).find('.h_score').text() + '</div>'
+            } else if (parseInt($(this).find('.h_score').text()) > parseInt($(this).find('.a_score').text())) {
+                game2 = '<div class="table_score" style="color:red;">' + $(this).find('.a_score').text() + ':' + $(this).find('.h_score').text() + '</div>'
+            }
+
+
+        }
+    })
+return game1 + '<br>' + game2
+
 }

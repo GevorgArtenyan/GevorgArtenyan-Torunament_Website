@@ -1,6 +1,4 @@
-.form-group {
-  display: none;
-}
+
 
 #div_id_name, #div_id_players,
 #div_id_player1, #div_id_player2,
@@ -203,4 +201,53 @@ body, html {
   display: inline-block;
   margin: 5px
 
+}
+
+.matches div {
+  display: inline-block;
+  margin: 5px
+
+}
+
+.result_table{
+	  table-layout: fixed;
+	  line-height: 7px;
+      margin: 0 auto;
+}
+.result_tr > td{
+	white-space: nowrap;
+	text-overflow: ellipsis;
+    overflow: hidden;
+	border: 1px dotted silver;
+    width:40px;
+	line-height;px;
+	padding:6px;
+	font-size:15px;
+	font-family: Helvetica, , sans-serif;
+    font-weight: 700;
+	background-color:#e9ecef;
+	border:1px solid black;
+    text-align:center;
+    vertical-align:center;
+    color:white;
+}
+.result_tr > td:nth-child(1),.result_tr:nth-child(1) > td{
+	background:#23366d;
+}
+
+.result_tr > .left_name {
+    width: 250px;
+    text-align: left
+}
+
+.not_played {
+    color: rgba(0, 0, 0, 0);
+}
+
+.game_match {
+	display: none;
+}
+
+.game_id {
+	display: none;
 }
