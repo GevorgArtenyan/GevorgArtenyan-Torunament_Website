@@ -2,7 +2,7 @@
 {% block content %}
 <div class="tournament_list">
     <h2>Latest Tournaments</h2>
-{% for tournament in my_tournaments %}
+{% for tournament in tournaments %}
     <div class="tournament_name_box">
     <a href="{% url 'detail' tournament.id %}">
     <p>{{ tournament.name }}</p>

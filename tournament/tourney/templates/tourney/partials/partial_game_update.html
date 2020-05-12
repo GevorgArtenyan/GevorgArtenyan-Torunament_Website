@@ -1,16 +1,21 @@
+{% load crispy_forms_tags %}
 <form method="post" action="{% url 'game_update' form.instance.pk %}" class="js-game-update-form">
   {% csrf_token %}
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="modal-title">Update game</h4>
   </div>
   <div class="modal-body">
-    {{ form }}
+    <div id="hp" style="display: none;">{{ form.home_player }}</div>
+    <div class="inline_score" id="team1"></div>
+    <div class="inline_score" id="s1">{{ form.h_score }}</div>
+    <div class="inline_score" id="s2">{{ form.a_score }}</div>
+    <div class="inline_score" id="team2"></div>
+    <div id="ap" style="display: none;">{{ form.away_player }}</div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Update game</button>
+    <button id="submit_btn" type="submit" class="btn btn-primary">Update game</button>
   </div>
 </form>

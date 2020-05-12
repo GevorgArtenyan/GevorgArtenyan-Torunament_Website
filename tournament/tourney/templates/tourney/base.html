@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,20 +8,61 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <title>Title</title>
 <body>
-{% if user.is_authenticated %}
-<div class="navbar-nav">
-              <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-              <a class="nav-item nav-link" href="{% url 'create_tournament' %}">Create Tournament</a>
-              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-</div>
-{% else %}
-<div class="navbar-nav">
-              <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-              <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-</div>
-{% endif %}
+
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark secondary-color lighten-1">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
+    aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">Home
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'create_tournament' %}">New Tournament</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-555" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">Tournaments
+        </a>
+        <div class="dropdown-menu dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-555">
+          <a class="dropdown-item" href="{% url 'all_tournaments' %}">All Tournaments</a>
+          <a class="dropdown-item" href="{% url 'home' %}">My Tournaments</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto nav-flex-icons">
+      <li class="nav-item avatar dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <img src="{{ user.profile.image.url }}" class="rounded-circle z-depth-0"
+            alt="avatar image">
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
+          aria-labelledby="navbarDropdownMenuLink-55">
+          <a class="dropdown-item" href="{% url 'profile' %}">{{ user.username }}'s Profile</a>
+          <a class="dropdown-item" href="#">My Tournaments</a>
+          <a class="dropdown-item" href="#">Settings</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+    <section class="home">
+    </section>
+<!-- Jquery needed -->
+
+
+<!-- Function used to shrink nav bar removing paddings and adding black background -->
 
 {% if messages %}
     {% for message in messages %}
@@ -35,7 +75,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="{% static 'tourney/main.js' %}">
+<script src="{% static 'tourney/main.js' %}"></script>
+<script>
+    $(window).scroll(function() {
+        if ($(document).scrollTop() > 50) {
+            $('.nav').addClass('affix');
+            console.log("OK");
+        } else {
+            $('.nav').removeClass('affix');
+        }
+    });
 </script>
 
 </body>

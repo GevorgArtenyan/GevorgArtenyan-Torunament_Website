@@ -10,6 +10,13 @@
     </div>
   </div>
 
+<br>
+<center>
+    <h1> {{ related_players.0.tournament }} </h1>
+</center>
+<div id="tourney_id" class="tournament_id"> {{ related_players.0.tournament.pk }} </div>
+
+
 
 <div class="tab">
 <button class="tablink" onclick="openPage('table', this, '#23366d')" id="defaultOpen">Table</button>
@@ -24,11 +31,8 @@
         <div class="container">
             <div class="main1">
                 <div class="main2 table-responsive">
-                    <center>
                         <br>
                         <br>
-                        <h2> {{ related_players.0.tournament }} </h2>
-                        <div id="tourney_id" class="tournament_id"> {{ related_players.0.tournament.pk }} </div>
                         <table class="table" id="player_list">
                             <thead>
                                 <td>Pos.</td>
@@ -59,7 +63,6 @@
                             </tbody>
         {% endfor %}
                         </table>
-                    </center>
                 </div>
             </div>
         </div>
@@ -84,15 +87,19 @@
         <form method="POST">
             {% csrf_token %}
             {{ formset.as_p }}
-            <button type="submit">Save</button>
+            <button class='add_player' type="submit">Save</button>
         </form>
     </div>
 </div>
 {% else %}
 {% endif %}
 <div id="settings" class="tabcontent">
-  <h3>Settings</h3>
-    <div id="poistion_priority">{{ related_players.0.tournament.position_priority }}</div>
+    <form method="POST">
+        {% csrf_token %}
+        {{ tournament_settings|crispy }}
+        <button id="save_tournament_settings" type="submit">Save</button>
+    </form>
+    <div id="poistion_priority" style="display: none;">{{ related_players.0.tournament.position_priority }}</div>
 </div>
 <div>
 </div>

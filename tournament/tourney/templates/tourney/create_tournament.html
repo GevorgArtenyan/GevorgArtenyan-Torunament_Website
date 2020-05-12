@@ -5,7 +5,7 @@
     <form id='player_form' method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="Save">
+        <input id="save_tournament_settings" type="submit" value="Save">
     </form>
 </div>
 {% endblock %}

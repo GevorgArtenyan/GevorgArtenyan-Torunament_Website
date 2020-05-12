@@ -170,5 +170,3 @@ def sort_table(player_list):
     my_dict = {i: sorted_by_head_to_head.count(i) for i in sorted_by_head_to_head}
     print(my_dict)
     return points_list
-
-

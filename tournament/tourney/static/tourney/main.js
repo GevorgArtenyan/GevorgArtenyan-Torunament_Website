@@ -74,7 +74,7 @@ $(function () {
 
 document.addEventListener('DOMContentLoaded', function(){
     Array.from(document.getElementsByClassName("pos")).forEach(
-        function(element, index, array) {
+        function(element, detail, array) {
             for (var i = 0; i <= array.length; i++) {
             array[i].innerHTML = i+1
         }
@@ -329,12 +329,10 @@ function countingStats(){
     )
   }
   playerResultList.length = 0
-  console.log(playerResultList)
   $('.name').each(function(){
     var playerName = $(this).text()
     playerResultList.push(playerName.trim())
 });
-  console.log(playerResultList)
   $('#results').empty()
   createTables(playerResultList.length-1,playerResultList.length-1);
 }
@@ -350,14 +348,12 @@ function countInArray(array, what) {
     return count;
 }
 
-console.log(playerResultList)
 
 $('.name').each(function(){
     var playerName = $(this).text()
     playerResultList.push(playerName.trim())
 });
 
-console.log(playerResultList)
 
 function createTables(maxNum,limit){
 	const table = document.createElement('table');
@@ -419,3 +415,36 @@ function calculationResults(team1, team2){
 return game1 + '<br>' + game2
 
 }
+
+
+$(window).scroll(function() {
+    if ($(document).scrollTop() > 50) {
+        $('.nav').addClass('affix');
+    } else {
+        $('.nav').removeClass('affix');
+    }
+});
+
+$('.navTrigger').click(function () {
+    $(this).toggleClass('active');
+    $("#mainListDiv").toggleClass("show_list");
+    $("#mainListDiv").fadeIn();
+
+});
+
+
+
+
+var targetNode = document.getElementById('modal-game');
+var observer = new MutationObserver(function(){
+    if(targetNode.style.display != 'none'){
+        $('#team1').text(( $("#id_home_player option:selected" ).text()));
+        $('#team2').text(( $("#id_away_player option:selected" ).text()));
+    }
+});
+observer.observe(targetNode, { attributes: true, childList: true });
+
+
+
+
+

@@ -11,9 +11,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+def about(request):
+    return render(request, 'tourney/about.html')
 
 class PlayerAPIListView(generics.ListAPIView):
     lookup_field = 'pk'
@@ -33,12 +38,31 @@ class TournamentCreateView(LoginRequiredMixin, CreateView):
         form.instance.host = self.request.user
         return super().form_valid(form)
 
-class TournamentListView(ListView):
-    model = TournamentModel
-    template_name = 'tourney/home.html'
+
+def my_tournaments(request):
+    context = {}
+    context['my_tournaments'] = TournamentModel.objects.filter(host=request.user)
+
+    return render(request, 'tourney/home.html', context)
 
 
-def index(request, pk):
+
+def tournamentlistview(request):
+    context = {}
+    context['tournaments'] = TournamentModel.objects.all()
+    context['players'] = PlayerLeagueModel.objects.all()
+
+    return render(request, 'tourney/all_tournaments.html', context)
+
+def detail(request, pk):
+    t = get_object_or_404(TournamentModel, pk=pk)
+    t_settings_form = TournamentForm(request.POST or None, instance=t)
+    if request.method == 'POST':
+        if t_settings_form.is_valid():
+            t_settings_form.save()
+            return redirect('detail', pk=pk)
+
+
     tournament = TournamentModel.objects.get(pk=pk)
     PlayerFormset = inlineformset_factory(TournamentModel, PlayerLeagueModel, fields=('name', ))
 
@@ -47,7 +71,7 @@ def index(request, pk):
         if formset.is_valid():
             formset.save()
 
-            return redirect('index', pk=pk)
+            return redirect('detail', pk=pk)
     formset = PlayerFormset(instance=tournament)
     related_players = PlayerLeagueModel.objects.filter(tournament=tournament)
     matches = MatchModel.objects.filter(player1__in=related_players)
@@ -56,8 +80,10 @@ def index(request, pk):
     table(related_players, games)
     related_players = sort_table(PlayerLeagueModel.objects.filter(tournament=tournament))
 
-    return render(request, 'tourney/index.html', {'formset':formset, 'related_players':related_players,
-                'matches':matches, 'games':games})
+
+
+    return render(request, 'tourney/detail.html', {'formset':formset, 'related_players':related_players,
+                'matches':matches, 'games':games, 'tournament_settings':t_settings_form})
 
 
 def save_game_form(request, form, template_name):
