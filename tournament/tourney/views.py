@@ -41,7 +41,10 @@ class TournamentCreateView(LoginRequiredMixin, CreateView):
 
 def my_tournaments(request):
     context = {}
-    context['my_tournaments'] = TournamentModel.objects.filter(host=request.user)
+    if request.user.is_authenticated:
+        context['my_tournaments'] = TournamentModel.objects.filter(host=request.user)
+    else:
+        context['my_tournaments'] = TournamentModel.objects.filter()
 
     return render(request, 'tourney/home.html', context)
 
