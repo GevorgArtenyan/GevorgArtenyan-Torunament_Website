@@ -13,7 +13,7 @@
       <td class="a_score">{{ game.a_score }}</td>
     {% endif %}
     <td class="away_player">{{ game.away_player }}</td>
-    <td style="width: 150px">
+    <td class="button-td">
       <button type="button"
               class="btn btn-warning btn-sm js-update-game"
               data-url="{% url 'game_update' game.id %}">

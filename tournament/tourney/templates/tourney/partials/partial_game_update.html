@@ -19,3 +19,11 @@
     <button id="submit_btn" type="submit" class="btn btn-primary">Update game</button>
   </div>
 </form>
+
+
+<script>
+    var team1 = $('#hp > select[name=home_player] > option:selected').text()
+    var team2 = $('#ap > select[name=away_player] > option:selected').text()
+    document.getElementById("team1").innerHTML = team1
+    document.getElementById("team2").innerHTML = team2
+</script>

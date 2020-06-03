@@ -12,16 +12,15 @@
 
 <br>
 <center>
-    <h1> {{ related_players.0.tournament }} </h1>
+    <h1> {{ tournament }} </h1>
 </center>
-<div id="tourney_id" class="tournament_id"> {{ related_players.0.tournament.pk }} </div>
-
+<div id="tourney_id" class="tournament_id"> {{ tournament.pk }} </div>
 
 
 <div class="tab">
 <button class="tablink" onclick="openPage('table', this, '#23366d')" id="defaultOpen">Table</button>
 <button class="tablink" onclick="openPage('results', this, '#23366d')">Results</button>
-{% if request.user.is_superuser %}
+{% if user.is_authenticated and user == tournament.host %}
 <button class="tablink" onclick="openPage('games', this, '#23366d')">Games</button>
 <button class="tablink" onclick="openPage('players', this, '#23366d')">Players</button>
 <button class="tablink" onclick="openPage('settings', this, '#23366d')">Settings</button>
@@ -30,13 +29,13 @@
 <div id="table" class="tabcontent">
         <div class="container">
             <div class="main1">
-                <div class="main2 table-responsive">
+                <div class="main2">
                         <br>
                         <br>
                         <table class="table" id="player_list">
-                            <thead>
+                            <thead class="thead">
                                 <td>Pos.</td>
-                                <td class="name">CLUBS</td>
+                                <td class="name"></td>
                                 <td>P</td>
                                 <td>W</td>
                                 <td>D</td>
@@ -44,7 +43,7 @@
                                 <td>GS</td>
                                 <td>GC</td>
                                 <td>GD</td>
-                                <td>POINTS</td>
+                                <td>PT</td>
                             </thead>
         {% for p in related_players %}
                             <tbody class="player_stats">
@@ -70,7 +69,7 @@
     <div id="results" class="tabcontent">
 
     </div>
-{% if request.user.is_superuser %}
+{% if user.is_authenticated and user == tournament.host %}
 <div id="games" class="tabcontent">
     <div class="game-section">
       <ul>
@@ -91,8 +90,6 @@
         </form>
     </div>
 </div>
-{% else %}
-{% endif %}
 <div id="settings" class="tabcontent">
     <form method="POST">
         {% csrf_token %}
@@ -102,6 +99,19 @@
     <div id="poistion_priority" style="display: none;">{{ related_players.0.tournament.position_priority }}</div>
 </div>
 <div>
+{% else %}
+<div id="games" class="tabcontent">
+    <div class="game-section">
+      <ul>
+        <table class="table" id="game-table">
+            <tbody>
+              {% include 'tourney/partials/partial_game_list.html' %}
+            </tbody>
+          </table>
+    </ul>
+    </div>
+</div>
+{% endif %}
 </div>
 </div>
 

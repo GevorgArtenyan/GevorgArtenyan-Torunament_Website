@@ -72,12 +72,14 @@ class GameModel(models.Model):
 def save_player(sender, instance, **kwargs):
     for i in PlayerLeagueModel.objects.all():
         if i.tournament == instance.tournament and i != instance:
-            m = MatchModel.objects.create(player1=instance, player2=i, score1=0, score2=0)
-            h = GameModel.objects.create(tournament=instance.tournament, match=m, home_player=instance, away_player=i)
-            a = GameModel.objects.create(tournament=instance.tournament, match=m, home_player=i, away_player=instance)
-            m.save()
-            h.save()
-            a.save()
+            if not MatchModel.objects.filter(player1=instance, player2=i, score1=0, score2=0) and not MatchModel.objects.filter(player1=i, player2=instance, score1=0, score2=0):
+                m = MatchModel.objects.create(player1=instance, player2=i, score1=0, score2=0)
+                m.save()
+                if not GameModel.objects.filter(tournament=instance.tournament, match=m, home_player=instance, away_player=i) and not GameModel.objects.filter(tournament=instance.tournament, match=m, home_player=i, away_player=instance):
+                    h = GameModel.objects.create(tournament=instance.tournament, match=m, home_player=instance, away_player=i)
+                    a = GameModel.objects.create(tournament=instance.tournament, match=m, home_player=i,away_player=instance)
+                    h.save()
+                    a.save()
 
 post_save.connect(save_player, sender=PlayerLeagueModel)
 

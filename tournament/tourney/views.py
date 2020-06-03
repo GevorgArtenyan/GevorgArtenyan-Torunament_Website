@@ -11,9 +11,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.db.models import Count
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -85,7 +82,7 @@ def detail(request, pk):
 
 
 
-    return render(request, 'tourney/detail.html', {'formset':formset, 'related_players':related_players,
+    return render(request, 'tourney/detail.html', {'formset':formset, 'tournament':tournament, 'related_players':related_players,
                 'matches':matches, 'games':games, 'tournament_settings':t_settings_form})
 
 

@@ -1,14 +1,20 @@
 .tournament_list {
+	text-align: center;
+	margin-top: 20px;
+	width: 95%;
+	margin-top: 20px;
 	margin: 0 auto;
-	margin-top: 20px;
-	width: 90%;
-	margin-top: 20px;
-    }
+}
 
 .tournament_list div p:nth-of-type(1) {
   font-size: 25px;
   padding-top: 0px;
-  text-align: center;
+}
+
+
+.tournament_list div p:nth-of-type(2) {
+  font-size: 20px;
+  padding-bottom: -0px;
 }
 
 
@@ -16,40 +22,41 @@
 .tournament_list div p:nth-of-type(3) {
   font-size: 10px;
   display: inline-block;
-  margin-top: -16px
+  margin-top: -16px;
+  margin-left: 3px;
+  margin-right: 3px;
 }
 
 .tournament_list div p:nth-of-type(2) {
     float: left;
     text-align: left;
-    margin-left: 5px;
 }
 .tournament_list div p:nth-of-type(3) {
     float: right;
     text-align: right;
-	margin-right: 5px;
 }
 
 
 
 .tournament_list h2{
     font-size: 25px;
-    text-align: center
 }
 
 .tournament_name_box{
 	border: 1px solid silver;
-	width: 65%;
-	margin: 0 auto;
+}
+
+.thead tr td:nth-of-type(10) {
+	width: 30px;
 }
 
 
 .main1 {
-    width: 60%;
+    width: 100%;
     height: auto;
     margin: auto;
     position: relative;
-    top: 0vh;
+    top: 0.5vh;
     font-family: Helvetica, , sans-serif;
     font-weight: 600;
     font-size: 12px;
@@ -81,6 +88,7 @@
 
 table {
     color: white
+    width: 100%
 }
 
 .logo {
@@ -149,7 +157,6 @@ body, html {
   margin: 0 auto;
   color: white;
   display: none;
-  padding: 35px 0px;
   height: auto;
 }
 
@@ -160,7 +167,7 @@ body, html {
 
 
 .tab {
-    width:80%;
+    width:100%;
     margin-top: 3em;
     margin-bottom: -0.75em;
     margin-left:auto;
@@ -182,18 +189,12 @@ body, html {
 }
 
 .game-section{
-  margin: 0 auto;
   top: 5vh;
-  width: 80%
 }
 
 .tournament_id {
     display: none;
 }
-
-
-
-
 
 .result_table{
 	  table-layout: fixed;
@@ -206,9 +207,9 @@ body, html {
     overflow: hidden;
 	border: 1px dotted silver;
     width:20px;
-	line-height:110%;
-	padding:0.5%;
-	font-size:15px;
+	line-height:70%;
+	padding:0.1%;
+	font-size:30%;
 	font-family: Helvetica, , sans-serif;
     font-weight: 600;
 	background-color:#e9ecef;
@@ -226,11 +227,6 @@ body, html {
     text-align: left
 }
 
-
-
-
-
-
 .not_played {
     color: rgba(0, 0, 0, 0);
 }
@@ -245,7 +241,7 @@ body, html {
 
 
 .form-group {
-	font-size: 15px;
+	font-size: 30px
 }
 
 .tournament_list a{
@@ -256,12 +252,12 @@ body, html {
     font-weight: 600;
 }
 
-.tournament_list a:hover{
+.tournament_name_box a:hover{
 	color: #00E676;
 }
 
 .tabcontent{
-
+	font-size: 20px;
 	font-family: Helvetica, , sans-serif;
     font-weight: 500;
     white-space: nowrap;
@@ -351,17 +347,13 @@ body{
 	white-space: nowrap;
 	text-overflow: ellipsis;
     overflow: hidden;
-	width:50%;
+	width:35vw;
 	table-layout: fixed;
 	overflow-wrap: break-word;
 }
 
 .thead tr td {
-	font-size: 9px;
-}
-
-#table {
-	padding-bottom: 10px;
+	font-size: 10px;
 }
 
 #login-register a{
@@ -373,102 +365,10 @@ body{
 }
 
 #account_confirmation{
-	margin: 0 auto;
-	font-size: 200%;
-	width: max-content;
+	text-align: center;
 	margin-top: 10%;
 	background-color:#1ec31e;
 	color: black;
-    padding:1%
-}
-
-#game-table{
-	margin-top: 15px;
-}
-
-#game-table{
-	margin-top: 15px;
-}
-
-#game-table tbody tr td{
-    font-size: 70%;
-    white-space: nowrap;
-	text-overflow: ellipsis;
-    overflow: hidden;
-	table-layout: fixed;
-	overflow-wrap: break-word;
-}
-
-
-#game-table tbody tr td:nth-child(4),
-#game-table tbody tr td:nth-child(5),
-#game-table tbody tr td:nth-child(6) {
-	width: 1px;;
-}
-
-#game-table tbody tr {
-	line-height: 3;
-}
-
-
-#game-table tbody tr td:nth-child(3) {
-	float: right;
-}
-
-#game-table tbody tr td:nth-child(7) {
-	float: left;
-}
-
-#players form{
-  margin-top: 4%;
-  font-size: 75%;
-}
-
-#settings form{
-  margin-top: 4%;
-  font-size: 50%;
-}
-
-#settings form div div{
-  margin-top: 1%;
-}
-
-#settings{
-    width: 40%;
-    font-size: 20%;
-}
-
-#settings input,
-#settings select{
-  font-size: 80%;
-}
-
-#settings button {
-  font-size:17px;
-  padding-top: 1px;
-  padding-bottom: 3px;
-}
-
-
-#players form {
-  display: flex;
-  flex-wrap:wrap;
-  padding-left: 0;
-}
-
-#players form p {
-  list-style: none;
-  flex: 0 0 50%;
-}
-
-#players form p:nth-child(odd) label{
-    display: none;
-}
-
-#players form p:nth-child(odd){
-   padding-right: 175px;
-}
-
-#players form p{
-   padding-right: 20px;
+    max-width:80%;
+    word-wrap:break-word;
 }

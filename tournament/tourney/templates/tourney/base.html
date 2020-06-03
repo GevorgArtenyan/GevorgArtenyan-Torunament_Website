@@ -5,6 +5,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><!-- Bootstrap CSS -->
 <link rel="stylesheet" href="{% static 'main.css' %}">
+<link rel="stylesheet" media='screen and (min-width: 140px) and (max-width: 414px)' href="{% static 'mobile.css' %}"/>
+<link rel="stylesheet" media='screen and (min-width: 415px) and (max-width: 768px)' href="{% static 'tablet.css' %}"/>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="shortcut icon" type="image/png" href="{% static 'favicon.jpg' %}"/>
 <title>Title</title>
@@ -26,9 +28,6 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'create_tournament' %}">New Tournament</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-555" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">Tournaments
@@ -40,21 +39,27 @@
         </div>
       </li>
     </ul>
+    {% if user.is_authenticated %}
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item avatar dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <img src="{{ user.profile.image.url }}" class="rounded-circle z-depth-0"
-            alt="avatar image">
+            {{ user.username }}
         </a>
         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
           aria-labelledby="navbarDropdownMenuLink-55">
           <a class="dropdown-item" href="{% url 'profile' %}">{{ user.username }}'s Profile</a>
           <a class="dropdown-item" href="#">My Tournaments</a>
-          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>
         </div>
       </li>
     </ul>
+    {% else %}
+    <div id="login-register">
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+    {% endif %}
   </div>
 </nav>
 
@@ -76,17 +81,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="{% static 'tourney/main.js' %}"></script>
-<script>
-    $(window).scroll(function() {
-        if ($(document).scrollTop() > 50) {
-            $('.nav').addClass('affix');
-            console.log("OK");
-        } else {
-            $('.nav').removeClass('affix');
-        }
-    });
-</script>
-
+<script src="{% static 'main.js' %}"></script>
 </body>
 </html>

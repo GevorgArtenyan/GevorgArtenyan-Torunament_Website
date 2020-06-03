@@ -2,7 +2,7 @@ var matchList = []
 var gameList = []
 var playerList = []
 var playerResultList = []
-var tournament_id = $('#tourney_id').text()
+var tournament_id = ($('#tourney_id').text()).trim()
 var thisTournamentGamesClass = '.from_tourney'+tournament_id.trim()
 var playersWithEqualPoints = []
 var headToHeadWins = []
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function(){
     Array.from(document.getElementsByClassName("pos")).forEach(
         function(element, detail, array) {
             for (var i = 0; i <= array.length; i++) {
-            array[i].innerHTML = i+1
+            $(array[i]).html(i+1)
         }
         }
     );
@@ -99,8 +99,8 @@ function openPage(pageName, elmnt, color) {
 document.getElementById("defaultOpen").click();
 
 
-var playerUrl = 'http://127.0.0.1:8000/playerapi/'
-var matchUrl = 'http://127.0.0.1:8000/matchapi/'
+var playerUrl = '/playerapi/'
+var matchUrl = '/matchapi/'
 
 function ajax(api){
     $.ajax({
@@ -390,7 +390,7 @@ createTables(playerResultList.length-1,playerResultList.length-1);
 function calculationResults(team1, team2){
     var game1 = '<div class="not_played">0:0</div>'
     var game2 = '<div class="not_played">0:0</div>'
-    $('.from_tourney2').each(function(){
+    $('.from_tourney'+tournament_id).each(function(){
         if ( team1 == $(this).find('.home_player').text() && team2 == $(this).find('.away_player').text()){
             if (parseInt($(this).find('.h_score').text()) > parseInt($(this).find('.a_score').text())) {
                 game1 = '<div class="table_score" style="color:green;">' + $(this).find('.h_score').text() + ':' + $(this).find('.a_score').text() + '</div>'
@@ -412,39 +412,9 @@ function calculationResults(team1, team2){
 
         }
     })
-return game1 + '<br>' + game2
+return game1 + game2
 
 }
-
-
-$(window).scroll(function() {
-    if ($(document).scrollTop() > 50) {
-        $('.nav').addClass('affix');
-    } else {
-        $('.nav').removeClass('affix');
-    }
-});
-
-$('.navTrigger').click(function () {
-    $(this).toggleClass('active');
-    $("#mainListDiv").toggleClass("show_list");
-    $("#mainListDiv").fadeIn();
-
-});
-
-
-
-
-var targetNode = document.getElementById('modal-game');
-var observer = new MutationObserver(function(){
-    if(targetNode.style.display != 'none'){
-        $('#team1').text(( $("#id_home_player option:selected" ).text()));
-        $('#team2').text(( $("#id_away_player option:selected" ).text()));
-    }
-});
-observer.observe(targetNode, { attributes: true, childList: true });
-
-
 
 
 

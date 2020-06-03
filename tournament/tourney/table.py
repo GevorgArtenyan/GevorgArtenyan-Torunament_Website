@@ -157,16 +157,12 @@ def sort_table(player_list):
         i +=1
     for m in no_dub_couples:
         sorted_by_head_to_head.append(head_to_head_winner(m[0], m[1]))
-        print(f'{m[0]} vs {m[1]} ----------> {head_to_head_winner(m[0], m[1])}')
 
     for p in player_list:
         if p.tournament.position_priority == 'Head to Head Matches':
             points_list.sort(key=lambda x: (x.points, sorted_by_head_to_head.count(x), x.goal_difference, x.goals_scored, x.wins), reverse=True)
         else:
             points_list.sort(key=lambda x: (x.points, x.goal_difference, sorted_by_head_to_head.count(x), x.goals_scored, x.wins), reverse=True)
-    print(f'no_dub_couples - {no_dub_couples}')
-    print(f'sprted_by_head_to_head - {sorted_by_head_to_head}')
-    print(f'points_list - {points_list}')
+
     my_dict = {i: sorted_by_head_to_head.count(i) for i in sorted_by_head_to_head}
-    print(my_dict)
     return points_list
